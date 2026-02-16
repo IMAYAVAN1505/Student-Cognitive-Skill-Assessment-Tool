@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/', auth, async (req, res) => {
   try {
-    const q = Assessment.find().populate('subject', 'name').sort({ scheduledAt: -1 });
+    const q = Assessment.find().populate('subject', 'name').sort({ scheduledAt: -1 });3
     // Don't expose full question objects (incl. correctAnswer) in list view to students.
     if (req.user?.role !== 'student') {
       q.populate('questions');
