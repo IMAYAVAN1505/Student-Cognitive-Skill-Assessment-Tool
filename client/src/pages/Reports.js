@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import api from '../api';
 import './Reports.css';
 
 export default function Reports() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedResult, setSelectedResult] = useState(null);
 
   useEffect(() => {
     api.get('/results/my-results')
@@ -49,18 +50,24 @@ export default function Reports() {
             <thead>
               <tr>
                 <th>Subject</th>
-                <th>Assessment</th>
-                <th>Score</th>
-                <th>Date</th>
+                <th className="col-score">Score</th>
+                <th className="col-date">Date</th>
               </tr>
             </thead>
             <tbody>
               {results.map((r) => (
                 <tr key={r._id}>
-                  <td>{r.subject?.name}</td>
-                  <td>{r.assessment?.title}</td>
-                  <td><strong>{r.percentage}%</strong> ({r.score}/{r.totalQuestions})</td>
-                  <td>{new Date(r.completedAt).toLocaleString()}</td>
+                  <td>
+                    <strong
+                      className="subject-link"
+                      style={{ cursor: 'pointer', color: 'var(--primary)' }}
+                      onClick={() => setSelectedResult(r)}
+                    >
+                      {r.subject?.name}
+                    </strong>
+                  </td>
+                  <td className="col-score"><strong>{r.percentage}%</strong> ({r.score}/{r.totalQuestions})</td>
+                  <td className="col-date">{new Date(r.completedAt).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
@@ -69,6 +76,44 @@ export default function Reports() {
           <p className="no-data">No results yet. Take an assessment from My Assessments.</p>
         )}
       </div>
+
+      {selectedResult && (
+        <div className="modal-overlay" onClick={() => setSelectedResult(null)}>
+          <div className="modal glass-card" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Assessment Result</h3>
+              <button className="btn-close" onClick={() => setSelectedResult(null)}>✕</button>
+            </div>
+            <div className="modal-body">
+              <div className="result-summary">
+                <div className="summary-item" style={{ borderBottom: '1px solid var(--border)', paddingBottom: '16px', marginBottom: '16px' }}>
+                  <label>Subject</label>
+                  <span>{selectedResult.subject?.name}</span>
+                </div>
+                <div className="summary-item">
+                  <label>Score</label>
+                  <span className="score-high">{selectedResult.percentage}%</span>
+                </div>
+                <div className="summary-item">
+                  <label>Completed On</label>
+                  <span>{new Date(selectedResult.completedAt).toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div className="result-details">
+                <h4>Performance Breakdown</h4>
+                <p>You answered <strong>{selectedResult.score}</strong> correct out of <strong>{selectedResult.totalQuestions}</strong> questions.</p>
+                <div className="progress-bar-wrap">
+                  <div className="progress-bar-fill" style={{ width: `${selectedResult.percentage}%` }}></div>
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-primary" onClick={() => setSelectedResult(null)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,33 +1,42 @@
 .subject-questions {
     max-width: 1000px;
     margin: 0 auto;
+    animation: fadeIn 0.6s ease-out;
 }
 
 .header-actions {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .subject-header {
-    padding: 32px;
-    margin-bottom: 24px;
-    background: var(--card-glass);
+    padding: 40px;
+    margin-bottom: 32px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
 }
 
 .questions-list {
-    padding: 32px;
+    padding: 40px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
 }
 
 .questions-list h2 {
-    margin-bottom: 24px;
-    color: var(--primary-light);
+    margin-bottom: 32px;
+    color: var(--text);
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
 }
 
 .question-item {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 24px;
-    padding: 20px 0;
+    gap: 32px;
+    padding: 24px 0;
     border-bottom: 1px solid var(--border);
 }
 
@@ -40,10 +49,11 @@
 }
 
 .q-text {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #fff;
-    margin-bottom: 12px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.4;
 }
 
 .q-options {
@@ -53,18 +63,78 @@
 }
 
 .q-opt {
-    padding: 4px 12px;
-    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 16px;
+    background: #f8fafc;
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 8px;
     font-size: 0.85rem;
     color: var(--text-muted);
+    font-weight: 500;
 }
 
 .q-opt.correct {
-    background: rgba(16, 185, 129, 0.1);
-    border-color: #10b981;
-    color: #10b981;
+    background: #eff6ff;
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.question-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.q-header label {
+    color: var(--text-muted);
+    font-weight: 800;
+}
+
+.q-text {
+    color: var(--text);
+    font-weight: 700;
+}
+
+.options-preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.opt-item {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.opt-item.correct {
+    color: var(--success);
+    font-weight: 800;
+}
+
+.btn-icon-sm {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+.btn-icon-sm.delete:hover {
+    color: var(--text);
+    border-color: var(--error);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.btn-icon-sm:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .q-actions {
@@ -73,12 +143,9 @@
     white-space: nowrap;
 }
 
-.delete-btn {
-    white-space: nowrap;
-}
-
 .page-error {
-    padding: 40px;
+    padding: 80px 48px;
     text-align: center;
-    color: var(--secondary);
+    color: var(--error);
+    font-weight: 700;
 }

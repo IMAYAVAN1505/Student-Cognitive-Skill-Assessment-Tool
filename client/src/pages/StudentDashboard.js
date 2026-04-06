@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import {
   AreaChart,
   Area,
@@ -18,15 +19,15 @@ import {
 import api from '../api';
 import './StudentDashboard.css';
 
-const PRIMARY = '#4f46e5';
+const PRIMARY = '#3b82f6';
 const SKILL_COLORS = {
-  'Memory Skills': '#6366f1',
-  'Attention & Focus': '#0ea5e9',
-  'Logical Reasoning': '#10b981',
+  'Memory Skills': '#3b82f6',
+  'Attention & Focus': '#06b6d4',
+  'Logical Reasoning': '#34d399',
   'Problem Solving': '#f59e0b',
   'Verbal Ability': '#ec4899',
-  'Numerical Ability': '#8b5cf6',
-  'Analytical Thinking': '#06b6d4',
+  'Numerical Ability': '#6366f1',
+  'Analytical Thinking': '#0ea5e9',
   'Critical Thinking': '#ef4444',
   'Decision Making': '#84cc16',
   'Pattern Recognition': '#f97316',
@@ -70,6 +71,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 };
 
 export default function StudentDashboard() {
+  const { user } = useAuth();
   const [stats, setStats] = useState(null);
   const [assessments, setAssessments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -120,34 +122,43 @@ export default function StudentDashboard() {
   return (
     <div className="student-dashboard">
       <header className="welcome-header">
-        <h1 className="dashboard-title">Welcome back!</h1>
-        <p className="dashboard-subtitle">Here's your cognitive performance overview.</p>
+        <h1 className="dashboard-title">Welcome back, {user?.name || 'User'}</h1>
+        <p className="dashboard-subtitle">Here's your Cognitive Assessment performance overview.</p>
       </header>
 
       <div className="stats-grid">
-        <div className="stat-card glass-card color-1">
-          <span className="stat-label">Average Score</span>
+        <div className="stat-card color-1">
+          <div className="stat-header">
+            <div className="stat-icon-box">📊</div>
+          </div>
           <div className="stat-value">
             {recentResults.length
               ? Math.round(recentResults.reduce((acc, r) => acc + r.percentage, 0) / recentResults.length)
               : 0}%
           </div>
+          <span className="stat-label">Average Score</span>
           <div className="stat-trend trend-up">
             ↑ 4.2% from last month
           </div>
         </div>
-        <div className="stat-card glass-card color-2">
-          <span className="stat-label">Tests Completed</span>
+        <div className="stat-card color-2">
+          <div className="stat-header">
+            <div className="stat-icon-box">✅</div>
+          </div>
           <div className="stat-value">{recentResults.length}</div>
+          <span className="stat-label">Tests Completed</span>
           <div className="stat-trend">
             Steady progress
           </div>
         </div>
-        <div className="stat-card glass-card color-3">
-          <span className="stat-label">Main Skill</span>
+        <div className="stat-card color-3">
+          <div className="stat-header">
+            <div className="stat-icon-box">🏆</div>
+          </div>
           <div className="stat-value" style={{ fontSize: '1.5rem', paddingTop: '10px' }}>
             {subjectDistribution.length ? subjectDistribution.sort((a, b) => b.value - a.value)[0].name : 'N/A'}
           </div>
+          <span className="stat-label">Main Skill</span>
         </div>
       </div>
 
@@ -158,20 +169,20 @@ export default function StudentDashboard() {
             {trendData.length ? (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                   <XAxis
                     dataKey="date"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 12, fill: '#94a3b8', fontWeight: 500 }}
+                    tick={{ fontSize: 12, fill: '#64748b', fontWeight: 500 }}
                   />
                   <YAxis
                     domain={[0, 100]}
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 12, fill: '#94a3b8', fontWeight: 500 }}
+                    tick={{ fontSize: 12, fill: '#64748b', fontWeight: 500 }}
                   />
-                  <Tooltip content={<TrendTooltip />} />
+                  <Tooltip content={<TrendTooltip />} cursor={{ fill: 'transparent' }} />
                   <Bar
                     dataKey="percentage"
                     fill={PRIMARY}
@@ -194,7 +205,7 @@ export default function StudentDashboard() {
               <>
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
-                    <Legend verticalAlign="top" align="center" iconType="circle" wrapperStyle={{ fontSize: '12px', paddingBottom: '20px' }} />
+                    <Legend verticalAlign="top" align="center" iconType="circle" wrapperStyle={{ fontSize: '12px', paddingBottom: '20px', color: '#64748b' }} />
                     <Pie
                       data={subjectDistribution}
                       cx="50%"
@@ -202,14 +213,15 @@ export default function StudentDashboard() {
                       outerRadius={80}
                       dataKey="value"
                       label={renderCustomizedLabel}
-                      labelLine={{ stroke: '#cbd5e1', strokeWidth: 1 }}
+                      labelLine={{ stroke: '#e2e8f0', strokeWidth: 1 }}
                     >
                       {subjectDistribution.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={Object.values(SKILL_COLORS)[index % 10]} />
                       ))}
                     </Pie>
                     <Tooltip
-                      contentStyle={{ borderRadius: '12px', border: 'none', background: 'rgba(255,255,255,0.95)' }}
+                      contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', background: '#ffffff', color: '#000' }}
+                      itemStyle={{ color: '#000' }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -227,28 +239,27 @@ export default function StudentDashboard() {
           <>
             <div className="results-table-header">
               <span>Subject</span>
-              <span>Assessment</span>
-              <span>Score</span>
-              <span style={{ textAlign: 'right' }}>Date</span>
+              <span className="col-score">Score</span>
+              <span className="col-date">Date</span>
             </div>
             <ul className="results-list">
               {recentResults.map((r) => (
                 <li key={r._id} className="result-item">
                   <span className="result-subject">
-                    <span style={{ width: 8, height: 8, borderRadius: '50%', background: PRIMARY }}></span>
-                    {r.subject?.name}
+                    <span style={{ width: 8, height: 8, borderRadius: '50%', background: PRIMARY, boxShadow: `0 0 10px ${PRIMARY}` }}></span>
+                    <span className="subject-link">{r.subject?.name}</span>
                   </span>
-                  <span className="result-title">{r.assessment?.title}</span>
-                  <span className="result-score">{r.percentage}%</span>
-                  <span className="result-date">{new Date(r.completedAt).toLocaleDateString()}</span>
+                  <span className="result-score col-score">{r.percentage}%</span>
+                  <span className="result-date col-date">{new Date(r.completedAt).toLocaleDateString()}</span>
                 </li>
               ))}
             </ul>
           </>
         ) : (
-          <p className="no-results">No results yet. Take an assessment to see your scores here.</p>
+          <p className="no-data">No results yet. Take an assessment to see your scores here.</p>
         )}
       </section>
-    </div>
+
+    </div >
   );
 }

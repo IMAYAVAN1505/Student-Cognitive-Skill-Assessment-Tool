@@ -24,7 +24,7 @@ export default function MyAssessments() {
   return (
     <div className="my-assessments">
       <h1 className="page-title">My Assessments</h1>
-      <p className="page-desc">Available tests by subject. Click Start to attempt. Only teachers can add questions; you can only take tests.</p>
+      <p className="page-desc">Available tests by subject. Click Start to attempt.</p>
       <div className="assessments-grid">
         {assessments.length ? assessments.map((a) => (
           <div key={a._id} className="assessment-card glass-card">

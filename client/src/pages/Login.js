@@ -20,8 +20,8 @@ export default function Login() {
     try {
       const data = await login(email, password);
       const role = data?.user?.role;
-      if (role === 'admin') navigate('/admin/subjects');
-      else if (role === 'teacher') navigate('/teacher/questions');
+      if (role === 'admin') navigate('/admin/users');
+      else if (role === 'teacher') navigate('/teacher/subjects');
       else navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message === 'Invalid credentials'
@@ -34,11 +34,15 @@ export default function Login() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card glass-card">
+      <div className="auth-card">
         <div className="auth-header">
-          <span className="auth-logo">◉</span>
-          <h1>Sign in</h1>
-          <p>Enter your credentials to access the platform.</p>
+          <div className="auth-logo-box" style={{ background: 'rgba(59, 130, 246, 0.1)' }}>
+            <svg viewBox="0 0 24 24" fill="none" className="auth-logo-svg">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#3b82f6" />
+            </svg>
+          </div>
+          <h1>Welcome Back</h1>
+          <p>Login to your Cognitive Assessment dashboard</p>
         </div>
         <form onSubmit={handleSubmit} className="auth-form">
           {error && <div className="auth-error">{error}</div>}

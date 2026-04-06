@@ -13,6 +13,7 @@ const resultSchema = new mongoose.Schema({
     isCorrect: Boolean,
   }],
   submitted: { type: Boolean, default: false },
+  assignmentFile: { type: String },
   completedAt: { type: Date, default: Date.now },
 }, { timestamps: true });
 

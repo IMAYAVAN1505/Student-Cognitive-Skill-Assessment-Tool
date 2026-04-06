@@ -5,7 +5,7 @@ const Subject = require('../models/Subject');
 const Question = require('../models/Question');
 const Assessment = require('../models/Assessment');
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/cognitive-assessment';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/skill-assessment';
 
 const subjects = [
   'Memory Skills',
@@ -82,26 +82,26 @@ async function seed() {
 
   const admin = await User.create({
     name: 'Admin User',
-    email: 'admin@cognitive.com',
+    email: 'admin@assessment.com',
     password: 'admin123',
     role: 'admin',
   });
 
   const teacher = await User.create({
     name: 'Jane Teacher',
-    email: 'teacher@cognitive.com',
+    email: 'teacher@assessment.com',
     password: 'teacher123',
     role: 'teacher',
   });
 
   const student = await User.create({
     name: 'John Student',
-    email: 'student@cognitive.com',
+    email: 'student@assessment.com',
     password: 'student123',
     role: 'student',
     rollNumber: 'STU001',
-    course: 'B.Sc. Cognitive Science',
-    department: 'Psychology',
+    course: 'B.Sc. Skill Assessment',
+    department: 'Standardized Testing',
   });
 
   await User.create({

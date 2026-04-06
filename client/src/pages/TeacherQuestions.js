@@ -16,6 +16,7 @@ export default function TeacherQuestions() {
     options: ['', '', '', ''],
     correctAnswer: '',
   });
+  const [numberOfOptions, setNumberOfOptions] = useState(4);
   const [showForm, setShowForm] = useState(false);
   const [expandedSubjects, setExpandedSubjects] = useState([]);
 
@@ -27,8 +28,7 @@ export default function TeacherQuestions() {
     );
   };
 
-  const mySubjectIds = (user?.assignedSubjects || []).map(s => s._id || s);
-  const mySubjects = subjects.filter(s => mySubjectIds.includes(s._id));
+  const mySubjects = subjects;
 
   useEffect(() => {
     Promise.all([api.get('/subjects'), api.get('/questions')])
@@ -45,10 +45,20 @@ export default function TeacherQuestions() {
     setForm({ ...form, options: opts });
   };
 
+  const handleNumberOfOptionsChange = (num) => {
+    setNumberOfOptions(num);
+    const newOptions = Array(num).fill('');
+    // Preserve existing options if possible
+    for (let i = 0; i < Math.min(num, form.options.length); i++) {
+      newOptions[i] = form.options[i];
+    }
+    setForm({ ...form, options: newOptions });
+  };
+
   const handleSubmit = async (e, shouldClose = true) => {
     e.preventDefault();
     if (!form.subject || !form.questionText.trim() || form.options.some(o => !o.trim()) || !form.correctAnswer.trim()) {
-      alert('Fill all fields and 4 options.');
+      alert(`Fill all fields and ${numberOfOptions} options.`);
       return;
     }
     try {
@@ -58,7 +68,7 @@ export default function TeacherQuestions() {
         options: form.options.map(o => o.trim()),
         correctAnswer: form.correctAnswer.trim(),
       });
-      setForm({ subject: '', questionText: '', options: ['', '', '', ''], correctAnswer: '' });
+      setForm({ subject: '', questionText: '', options: Array(numberOfOptions).fill(''), correctAnswer: '' });
       if (shouldClose) setShowForm(false);
       api.get('/questions').then(res => setQuestions(res.data));
     } catch (err) {
@@ -81,7 +91,7 @@ export default function TeacherQuestions() {
   return (
     <div className="teacher-questions">
       <h1 className="page-title">Question management</h1>
-      <p className="page-desc">Add questions only for your assigned subjects. You have access to: {mySubjects.map(s => s.name).join(', ') || 'None'}.</p>
+      <p className="page-desc">Add questions to subjects for assessments.</p>
 
       <button type="button" className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
         {showForm ? 'Cancel' : 'Add question'}
@@ -99,8 +109,13 @@ export default function TeacherQuestions() {
             </select>
             <label className="label">Question text</label>
             <textarea className="input" rows={3} value={form.questionText} onChange={(e) => setForm({ ...form, questionText: e.target.value })} required />
-            <label className="label">Options (4)</label>
-            {[0, 1, 2, 3].map(i => (
+            <label className="label">Options</label>
+            <select className="input" value={numberOfOptions} onChange={(e) => handleNumberOfOptionsChange(parseInt(e.target.value))}>
+              {[2, 3, 4, 5, 6].map(num => (
+                <option key={num} value={num}>{num}</option>
+              ))}
+            </select>
+            {[0, 1, 2, 3, 4, 5].filter(i => i < numberOfOptions).map(i => (
               <input key={i} type="text" className="input" placeholder={`Option ${i + 1}`} value={form.options[i]} onChange={(e) => handleOptionChange(i, e.target.value)} required />
             ))}
             <label className="label">Correct answer (exact text)</label>
@@ -133,7 +148,7 @@ export default function TeacherQuestions() {
         })}
         {mySubjects.length === 0 && (
           <div className="card" style={{ width: '100%', padding: '20px' }}>
-            <p className="no-data">No assigned subjects found. Please contact admin.</p>
+            <p className="no-data">No subjects found. Please add a subject first.</p>
           </div>
         )}
       </div>

@@ -1,21 +1,22 @@
-.profile-dropdown {
-  position: relative;
-}
-
 .profile-trigger {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 6px 12px;
-  border-radius: var(--radius-sm);
+  border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--card);
   color: var(--text);
   font-size: 0.9rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
 }
 
 .profile-trigger:hover {
   background: #f8fafc;
+  border-color: var(--primary);
+  box-shadow: var(--shadow);
 }
 
 .profile-avatar,
@@ -33,7 +34,7 @@
 }
 
 .profile-name {
-  font-weight: 500;
+  font-weight: 600;
   max-width: 140px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -52,20 +53,25 @@
 
 .profile-menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 12px);
   right: 0;
   min-width: 280px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
   padding: 0;
   z-index: 50;
   box-shadow: var(--shadow-md);
+  overflow: hidden;
 }
 
 .profile-menu-header {
-  padding: 16px;
+  padding: 20px 16px;
   display: flex;
   gap: 12px;
   align-items: flex-start;
   border-bottom: 1px solid var(--border);
+  background: #f8fafc;
 }
 
 .profile-menu-name {
@@ -81,8 +87,10 @@
 
 .profile-menu-meta {
   font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 4px;
+  color: var(--primary);
+  font-weight: 700;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
 }
 
 .profile-menu-actions {
@@ -90,38 +98,45 @@
 }
 
 .profile-menu-item {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px;
   text-align: left;
   border: none;
   background: none;
-  color: var(--text);
+  color: var(--text-muted);
   font-size: 0.95rem;
-  border-radius: var(--radius-sm);
+  font-weight: 500;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .profile-menu-item:hover {
   background: #f1f5f9;
+  color: var(--text);
 }
 
 .profile-menu-item.logout {
-  color: #dc2626;
+  color: #ef4444;
+  margin-top: 4px;
 }
 
 .profile-menu-item.logout:hover {
-  background: #fef2f2;
+  background: rgba(239, 68, 68, 0.05);
 }
 
 .profile-menu-subjects {
   margin-top: 6px;
   font-size: 0.8rem;
   line-height: 1.4;
+  color: var(--text-muted);
 }
 
 .profile-menu-subjects strong {
   display: block;
   margin-bottom: 2px;
+  color: var(--text);
 }

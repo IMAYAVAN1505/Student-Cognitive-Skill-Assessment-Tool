@@ -18,9 +18,9 @@ export default function DashboardLayout() {
   useEffect(() => {
     if (!user) return;
     if ((location.pathname === '/dashboard' || location.pathname === '/dashboard/') && user.role === 'admin') {
-      navigate('/admin/subjects', { replace: true });
+      navigate('/admin/users', { replace: true });
     } else if ((location.pathname === '/dashboard' || location.pathname === '/dashboard/') && user.role === 'teacher') {
-      navigate('/teacher/questions', { replace: true });
+      navigate('/teacher/subjects', { replace: true });
     }
   }, [user, location.pathname, navigate]);
 
@@ -32,19 +32,19 @@ export default function DashboardLayout() {
   ];
 
   const adminNav = [
-    { to: '/admin/subjects', label: 'Subjects', icon: '📚', end: true },
-    { to: '/admin/users', label: 'Users', icon: '👥', end: false },
+    { to: '/admin/users', label: 'Users', icon: '👥', end: true },
     { to: '/admin/profile', label: 'Profile', icon: '👤', end: false },
   ];
 
   const teacherNav = [
-    { to: '/teacher/questions', label: 'Questions', icon: '❓', end: true },
-    { to: '/teacher/students', label: 'Student', icon: '👨‍🎓', end: false },
     { to: '/teacher/profile', label: 'Profile', icon: '👤', end: false },
+    { to: '/teacher/subjects', label: 'Subjects', icon: '📚', end: true },
+    { to: '/teacher/questions', label: 'Questions', icon: '❓', end: false },
+    { to: '/teacher/students', label: 'Student', icon: '👨‍🎓', end: false },
   ];
 
   const nav = user?.role === 'admin' ? adminNav : user?.role === 'teacher' ? teacherNav : studentNav;
-  const base = user?.role === 'admin' ? '/admin/subjects' : user?.role === 'teacher' ? '/teacher/questions' : '/dashboard';
+  const base = user?.role === 'admin' ? '/admin/users' : user?.role === 'teacher' ? '/teacher/subjects' : '/dashboard';
 
   return (
     <div className="dashboard-layout">
@@ -55,7 +55,11 @@ export default function DashboardLayout() {
 
       <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-brand">
-          <span className="sidebar-logo">◉</span>
+          <div className="brand-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" className="brand-logo-svg">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#3b82f6" />
+            </svg>
+          </div>
           <span className="sidebar-title">Cognitive Assessment</span>
         </div>
         <nav className="sidebar-nav">

@@ -31,8 +31,8 @@ export default function Register() {
     try {
       const data = await register(form);
       const role = data?.user?.role;
-      if (role === 'admin') navigate('/admin/subjects');
-      else if (role === 'teacher') navigate('/teacher/questions');
+      if (role === 'admin') navigate('/admin/users');
+      else if (role === 'teacher') navigate('/teacher/subjects');
       else navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -43,11 +43,15 @@ export default function Register() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card glass-card">
+      <div className="auth-card">
         <div className="auth-header">
-          <span className="auth-logo">◉</span>
-          <h1>Create account</h1>
-          <p>Join the cognitive assessment platform.</p>
+          <div className="auth-logo-box" style={{ background: 'rgba(59, 130, 246, 0.1)' }}>
+            <svg viewBox="0 0 24 24" fill="none" className="auth-logo-svg">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#3b82f6" />
+            </svg>
+          </div>
+          <h1>Create Account</h1>
+          <p>Join the Cognitive Assessment ecosystem</p>
         </div>
         <form onSubmit={handleSubmit} className="auth-form">
           {error && <div className="auth-error">{error}</div>}
@@ -82,7 +86,7 @@ export default function Register() {
             </div>
           </div>
           <div className="form-group">
-            <label className="label">Role</label>
+            <label className="label">Select the role</label>
             <select className="input" name="role" value={form.role} onChange={handleChange}>
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>

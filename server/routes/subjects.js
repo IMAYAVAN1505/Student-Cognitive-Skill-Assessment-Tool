@@ -29,7 +29,7 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-router.post('/', auth, requireRole('admin'), async (req, res) => {
+router.post('/', auth, requireRole('admin', 'teacher'), async (req, res) => {
   try {
     const subject = await Subject.create(req.body);
     res.status(201).json(subject);
@@ -38,7 +38,7 @@ router.post('/', auth, requireRole('admin'), async (req, res) => {
   }
 });
 
-router.put('/:id', auth, requireRole('admin'), async (req, res) => {
+router.put('/:id', auth, requireRole('admin', 'teacher'), async (req, res) => {
   try {
     const subject = await Subject.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(subject);
@@ -47,7 +47,7 @@ router.put('/:id', auth, requireRole('admin'), async (req, res) => {
   }
 });
 
-router.put('/:id/assign-teachers', auth, requireRole('admin'), async (req, res) => {
+router.put('/:id/assign-teachers', auth, requireRole('admin', 'teacher'), async (req, res) => {
   try {
     const { assignedTeachers } = req.body;
     const subjectId = req.params.id;
@@ -80,7 +80,7 @@ router.put('/:id/assign-teachers', auth, requireRole('admin'), async (req, res) 
   }
 });
 
-router.delete('/:id', auth, requireRole('admin'), async (req, res) => {
+router.delete('/:id', auth, requireRole('admin', 'teacher'), async (req, res) => {
   try {
     await Subject.findByIdAndDelete(req.params.id);
     res.json({ message: 'Subject deleted' });

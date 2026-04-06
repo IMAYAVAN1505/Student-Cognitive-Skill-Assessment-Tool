@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/cognitive-assessment');
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/skill-assessment');
     console.log('MongoDB connected');
   } catch (err) {
     console.error(err.message);

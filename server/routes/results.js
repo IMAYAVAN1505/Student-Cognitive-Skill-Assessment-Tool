@@ -1,10 +1,30 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 const Result = require('../models/Result');
 const Assessment = require('../models/Assessment');
 const Question = require('../models/Question');
 const { auth, requireRole } = require('../middleware/auth');
 
 const router = express.Router();
+
+// Ensure uploads directory exists
+const uploadDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${req.params.resultId}-${Date.now()}${path.extname(file.originalname)}`);
+  }
+});
+
+const upload = multer({ storage });
 
 router.post('/submit', auth, requireRole('student'), async (req, res) => {
   try {
@@ -91,6 +111,7 @@ router.get('/dashboard-stats', auth, requireRole('student'), async (req, res) =>
   try {
     const results = await Result.find({ student: req.user.id })
       .populate('subject', 'name')
+      .populate('assessment', 'title')
       .sort({ completedAt: 1 });
     const bySubject = {};
     results.forEach(r => {
@@ -113,6 +134,46 @@ router.get('/dashboard-stats', auth, requireRole('student'), async (req, res) =>
     })).slice(-20);
     res.json({ skillSummary, trendData, recentResults: results.slice(0, 10) });
   } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post('/upload-assignment/:resultId', auth, requireRole('student'), upload.single('assignment'), async (req, res) => {
+  try {
+    console.log('Upload request for result:', req.params.resultId);
+    console.log('Headers:', req.headers['content-type']);
+    console.log('File:', req.file);
+
+    const result = await Result.findOne({ _id: req.params.resultId, student: req.user.id });
+    if (!result) {
+      console.log('Result not found or not owned by student');
+      return res.status(404).json({ message: 'Result not found' });
+    }
+
+    if (!req.file) {
+      console.log('No file received by Multer');
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    // Delete old file if exists
+    if (result.assignmentFile) {
+      const oldPath = path.join(uploadDir, result.assignmentFile);
+      if (fs.existsSync(oldPath)) {
+        try {
+          fs.unlinkSync(oldPath);
+        } catch (e) {
+          console.error('Error deleting old file:', e);
+        }
+      }
+    }
+
+    result.assignmentFile = req.file.filename;
+    await result.save();
+
+    console.log('File saved successfully:', req.file.filename);
+    res.json({ message: 'File uploaded successfully', filename: req.file.filename });
+  } catch (err) {
+    console.error('Upload Error:', err);
     res.status(500).json({ message: err.message });
   }
 });

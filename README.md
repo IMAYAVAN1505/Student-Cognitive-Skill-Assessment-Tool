@@ -1,6 +1,6 @@
-# Student Cognitive Skill Assessment Tool
+# Cognitive Assessment
 
-A full-stack web application for assessing and tracking student cognitive skills with role-based access (Admin, Teacher, Student).
+A full-stack web application for assessing and tracking student skills with role-based access (Admin, Teacher, Student).
 
 ## Tech Stack
 
@@ -51,9 +51,9 @@ After running `npm run seed` in `server`:
 
 | Role    | Email                 | Password   |
 |---------|-----------------------|------------|
-| Admin   | admin@cognitive.com   | admin123   |
-| Teacher | teacher@cognitive.com | teacher123 |
-| Student | student@cognitive.com | student123 |
+| Admin   | admin@assessment.com   | admin123   |
+| Teacher | teacher@assessment.com | teacher123 |
+| Student | student@assessment.com | student123 |
 
 ## Project Structure
 

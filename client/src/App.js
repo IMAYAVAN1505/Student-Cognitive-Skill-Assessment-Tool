@@ -10,13 +10,14 @@ import StudentDashboard from './pages/StudentDashboard';
 import MyAssessments from './pages/MyAssessments';
 import Reports from './pages/Reports';
 import TakeTest from './pages/TakeTest';
-import AdminSubjects from './pages/AdminSubjects';
+import ManageSubjects from './pages/ManageSubjects';
 import TeacherQuestions from './pages/TeacherQuestions';
 import TeacherStudents from './pages/TeacherStudents';
 import StudentInsights from './pages/StudentInsights';
 import AdminUsers from './pages/AdminUsers';
 import Profile from './pages/Profile';
 import SubjectQuestions from './pages/SubjectQuestions';
+import Explanations from './pages/Explanations';
 
 function PrivateRoute({ children, allowedRoles }) {
   const { user, loading } = useAuth();
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<PublicOnly><Login /></PublicOnly>} />
         <Route path="/register" element={<PublicOnly><Register /></PublicOnly>} />
+        <Route path="/explanations" element={<Explanations />} />
 
         <Route path="/dashboard" element={
           <PrivateRoute allowedRoles={['student']}>
@@ -58,8 +60,7 @@ export default function App() {
             <DashboardLayout />
           </PrivateRoute>
         }>
-          <Route index element={<Navigate to="/admin/subjects" replace />} />
-          <Route path="subjects" element={<AdminSubjects />} />
+          <Route index element={<Navigate to="/admin/users" replace />} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="profile" element={<Profile />} />
         </Route>
@@ -69,7 +70,8 @@ export default function App() {
             <DashboardLayout />
           </PrivateRoute>
         }>
-          <Route index element={<Navigate to="/teacher/questions" replace />} />
+          <Route index element={<Navigate to="/teacher/subjects" replace />} />
+          <Route path="subjects" element={<ManageSubjects />} />
           <Route path="questions" element={<TeacherQuestions />} />
           <Route path="questions/:subjectId" element={<SubjectQuestions />} />
           <Route path="students" element={<TeacherStudents />} />

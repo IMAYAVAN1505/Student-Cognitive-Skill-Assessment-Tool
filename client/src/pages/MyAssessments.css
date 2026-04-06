@@ -9,12 +9,12 @@
   font-size: 2.75rem;
   font-weight: 950;
   margin-bottom: 8px;
-  color: #fff;
+  color: var(--text);
   letter-spacing: -0.04em;
 }
 
 .page-desc {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
   margin-bottom: 40px;
   font-size: 1.1rem;
   line-height: 1.6;
@@ -38,6 +38,16 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+}
+
+.assessment-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .assessment-card h3 {
@@ -45,31 +55,33 @@
   font-weight: 800;
   margin-bottom: 12px;
   line-height: 1.15;
-  color: #fff;
+  color: var(--text);
+  letter-spacing: -0.02em;
 }
 
 .assessment-meta {
   display: inline-flex;
   align-items: center;
-  padding: 6px 16px;
-  background: var(--primary-glow);
+  padding: 6px 14px;
+  background: rgba(59, 130, 246, 0.1);
   color: var(--primary-light);
-  border-radius: 30px;
-  font-size: 0.85rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
   font-weight: 800;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   align-self: flex-start;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  border: 1px solid rgba(129, 140, 248, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .assessment-questions {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
   margin-bottom: 32px;
   flex-grow: 1;
   line-height: 1.5;
+  font-weight: 500;
 }
 
 .no-data-block {
@@ -79,7 +91,7 @@
 }
 
 .no-data {
-  color: #fff;
+  color: var(--text);
   font-size: 1.75rem;
   font-weight: 800;
   margin-bottom: 16px;
@@ -87,7 +99,7 @@
 }
 
 .no-data-hint {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-muted);
   font-size: 1.1rem;
   max-width: 520px;
   margin: 0 auto;
