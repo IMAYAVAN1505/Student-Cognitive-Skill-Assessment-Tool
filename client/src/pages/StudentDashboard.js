@@ -220,8 +220,14 @@ export default function StudentDashboard() {
                       ))}
                     </Pie>
                     <Tooltip
-                      contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', background: '#ffffff', color: '#000' }}
-                      itemStyle={{ color: '#000' }}
+                      contentStyle={{
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        background: 'rgba(20, 20, 20, 0.95)',
+                        color: '#ffffff',
+                        backdropFilter: 'blur(10px)'
+                      }}
+                      itemStyle={{ color: '#ffffff' }}
                     />
                   </PieChart>
                 </ResponsiveContainer>

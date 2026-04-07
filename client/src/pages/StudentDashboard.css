@@ -38,8 +38,15 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .student-dashboard {
@@ -201,10 +208,10 @@
 
 /* Custom Tooltip Styles */
 .trend-tooltip {
-  background: rgba(255, 255, 255, 0.98);
+  background: var(--card-glass);
   border-radius: 12px;
   padding: 12px 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   border: 1px solid var(--border);
   backdrop-filter: blur(8px);
 }
