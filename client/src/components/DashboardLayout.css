@@ -121,7 +121,7 @@
   display: block;
   font-size: 0.65rem;
   font-weight: 800;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.1em;
   margin-bottom: 8px;
 }
@@ -158,7 +158,7 @@
 .status-text {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text);
+  color: #ffffff;
 }
 
 .logout-btn {
@@ -185,7 +185,7 @@
   gap: 14px;
   padding: 12px 20px;
   border-radius: 10px;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 600;
   font-size: 0.95rem;
   transition: all 0.2s ease;
@@ -193,19 +193,19 @@
 }
 
 .sidebar-link:hover {
-  background: rgba(59, 130, 246, 0.05);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
   transform: translateX(4px);
 }
 
 .sidebar-link.active {
-  background: rgba(59, 130, 246, 0.08);
-  color: var(--primary);
-  border: 1px solid rgba(59, 130, 246, 0.1);
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .sidebar-link.active .sidebar-icon {
-  color: var(--primary);
+  color: #ffffff;
   transform: scale(1.1);
 }
 
@@ -218,10 +218,10 @@
 
 .dashboard-header {
   height: 72px;
-  background: var(--card-glass);
+  background: var(--primary);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.2);
   display: flex;
   align-items: center;
   padding: 0 32px;
@@ -232,10 +232,10 @@
 }
 
 .menu-btn {
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 1.1rem;
-  color: var(--text);
+  color: #ffffff;
   padding: 8px;
   border-radius: 10px;
   display: flex;
@@ -246,8 +246,8 @@
 }
 
 .menu-btn:hover {
-  background: rgba(59, 130, 246, 0.05);
-  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
   transform: scale(1.05);
   box-shadow: var(--shadow);
 }

@@ -5,31 +5,31 @@
 }
 
 :root {
-  --bg: #000000;
-  --bg-gradient: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #111111 100%);
-  --card: rgba(20, 20, 20, 0.95);
-  --card-glass: rgba(15, 15, 15, 0.98);
-  --primary: #3b82f6;
-  --primary-light: #60a5fa;
-  --primary-dark: #2563eb;
-  --primary-glow: rgba(59, 130, 246, 0.1);
+  --bg: #ffffff;
+  --bg-gradient: none;
+  --card: #f8fafc;
+  --card-glass: rgba(255, 255, 255, 0.95);
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e40af;
+  --primary-glow: rgba(37, 99, 235, 0.1);
   --secondary: #0ea5e9;
-  --accent: #38bdf8;
-  --text: #ffffff;
-  --text-muted: #94a3b8;
-  --text-light: #ffffff;
-  --border: rgba(255, 255, 255, 0.1);
-  --border-focus: #3b82f6;
-  --success: #10b981;
+  --accent: #3b82f6;
+  --text: #0f172a;
+  --text-muted: #1e293b;
+  --text-light: #334155;
+  --border: rgba(0, 0, 0, 0.12);
+  --border-focus: #2563eb;
+  --success: #16a34a;
   --warning: #f59e0b;
   --error: #ef4444;
-  --sidebar-bg: rgba(10, 10, 10, 0.98);
+  --sidebar-bg: #2563eb;
   --sidebar-text: #ffffff;
   --font-sans: 'Inter', 'Outfit', system-ui, -apple-system, sans-serif;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.7);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.8);
-  --shadow-glass: 0 0px 40px 0 rgba(59, 130, 246, 0.05);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+  --shadow-glass: 0 0px 40px 0 rgba(37, 99, 235, 0.08);
   --radius: 16px;
   --radius-lg: 24px;
   --radius-sm: 12px;
@@ -241,7 +241,7 @@ textarea {
   border-radius: var(--radius-sm);
   font-size: 1rem;
   background: rgba(255, 255, 255, 0.95);
-  color: #000000;
+  color: #0f172a;
   transition: all var(--transition-fast);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -250,7 +250,7 @@ textarea {
 
 /* Ensure dropdown options are readable */
 select.input option {
-  color: #000000;
+  color: #0f172a;
   background: #ffffff;
 }
 
