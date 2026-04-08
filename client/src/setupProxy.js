@@ -6,6 +6,9 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: 'http://localhost:5000',
       changeOrigin: true,
+      pathRewrite: {
+        '^/': '/api/', // This restores the /api prefix that express strips
+      },
     })
   );
 };
